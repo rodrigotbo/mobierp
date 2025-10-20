@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Marcas Padrão -->
+        <record id="brand_apple" model="repair.brand">
+            <field name="name">Apple</field>
+        </record>
+        
+        <record id="brand_samsung" model="repair.brand">
+            <field name="name">Samsung</field>
+        </record>
+        
+        <record id="brand_motorola" model="repair.brand">
+            <field name="name">Motorola</field>
+        </record>
+        
+        <record id="brand_xiaomi" model="repair.brand">
+            <field name="name">Xiaomi</field>
+        </record>
+        
+        <record id="brand_lg" model="repair.brand">
+            <field name="name">LG</field>
+        </record>
+        
+        <!-- Modelos Apple -->
+        <record id="model_iphone_14_pro" model="repair.device.model">
+            <field name="name">iPhone 14 Pro</field>
+            <field name="brand_id" ref="brand_apple"/>
+        </record>
+        
+        <record id="model_iphone_13" model="repair.device.model">
+            <field name="name">iPhone 13</field>
+            <field name="brand_id" ref="brand_apple"/>
+        </record>
+        
+        <record id="model_iphone_12" model="repair.device.model">
+            <field name="name">iPhone 12</field>
+            <field name="brand_id" ref="brand_apple"/>
+        </record>
+        
+        <!-- Modelos Samsung -->
+        <record id="model_galaxy_s23" model="repair.device.model">
+            <field name="name">Galaxy S23</field>
+            <field name="brand_id" ref="brand_samsung"/>
+        </record>
+        
+        <record id="model_galaxy_a54" model="repair.device.model">
+            <field name="name">Galaxy A54</field>
+            <field name="brand_id" ref="brand_samsung"/>
+        </record>
+        
+        <!-- Modelos Motorola -->
+        <record id="model_moto_g73" model="repair.device.model">
+            <field name="name">Moto G73</field>
+            <field name="brand_id" ref="brand_motorola"/>
+        </record>
+        
+        <record id="model_moto_edge_40" model="repair.device.model">
+            <field name="name">Moto Edge 40</field>
+            <field name="brand_id" ref="brand_motorola"/>
+        </record>
+    </data>
+</odoo>

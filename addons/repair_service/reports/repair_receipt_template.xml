@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_repair_receipt">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        
+                        <!-- Cabeçalho -->
+                        <h2 class="text-center mb-4">
+                            COMPROVANTE DE ORDEM DE SERVIÇO
+                        </h2>
+                        
+                        <!-- Informações da OS -->
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <strong>Número OS:</strong> <span t-field="o.name"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Data de Entrada:</strong> <span t-field="o.date_entry" t-options='{"widget": "date"}'/>
+                            </div>
+                        </div>
+                        
+                        <!-- Dados do Cliente -->
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5>Dados do Cliente</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong>Nome:</strong> <span t-field="o.partner_id.name"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>Telefone:</strong> <span t-field="o.partner_phone"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Celular:</strong> <span t-field="o.partner_mobile"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong>E-mail:</strong> <span t-field="o.partner_email"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dados do Dispositivo -->
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5>Dados do Dispositivo</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>Marca:</strong> <span t-field="o.brand_id.name"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Modelo:</strong> <span t-field="o.device_model_id.name"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>IMEI/Serial:</strong> <span t-field="o.device_imei"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Cor:</strong> <span t-field="o.device_color"/>
+                                    </div>
+                                </div>
+                                <div class="row" t-if="o.accessories">
+                                    <div class="col-12">
+                                        <strong>Acessórios:</strong> <span t-field="o.accessories"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Problema Relatado -->
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5>Problema Relatado</h5>
+                            </div>
+                            <div class="card-body">
+                                <p t-field="o.problem_description"/>
+                            </div>
+                        </div>
+                        
+                        <!-- Serviços e Valores (se houver) -->
+                        <t t-if="o.service_line_ids">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h5>Serviços e Peças</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Descrição</th>
+                                                <th class="text-right">Qtd</th>
+                                                <th class="text-right">Valor Unit.</th>
+                                                <th class="text-right">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.service_line_ids" t-as="line">
+                                                <tr>
+                                                    <td><span t-field="line.product_id.name"/></td>
+                                                    <td class="text-right"><span t-field="line.quantity"/></td>
+                                                    <td class="text-right"><span t-field="line.price_unit" widget="monetary"/></td>
+                                                    <td class="text-right"><span t-field="line.price_subtotal" widget="monetary"/></td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="3" class="text-right">Total:</th>
+                                                <th class="text-right"><span t-field="o.amount_total" widget="monetary"/></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                        
+                        <!-- Informações Adicionais -->
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <strong>Previsão de Entrega:</strong> 
+                                <span t-field="o.date_expected" t-options='{"widget": "date"}'/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Status:</strong> 
+                                <span t-field="o.state"/>
+                            </div>
+                        </div>
+                        
+                        <!-- Termos e Garantia -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Termos e Condições</h5>
+                            </div>
+                            <div class="card-body small">
+                                <p>1. O prazo de entrega é estimado e pode sofrer alterações.</p>
+                                <p>2. Equipamentos não retirados em 90 dias serão descartados.</p>
+                                <p>3. Garantia de <span t-field="o.warranty_days"/> dias para o serviço executado.</p>
+                                <p>4. A garantia não cobre danos por mau uso ou novos defeitos.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Assinaturas -->
+                        <div class="row mt-5">
+                            <div class="col-6 text-center">
+                                <hr style="border-top: 1px solid #000; width: 80%;"/>
+                                <p>Assinatura do Cliente</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <hr style="border-top: 1px solid #000; width: 80%;"/>
+                                <p>Assinatura do Atendente</p>
+                            </div>
+                        </div>
+                        
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

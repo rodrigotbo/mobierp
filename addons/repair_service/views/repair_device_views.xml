@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Device Model Views -->
+    <record id="view_repair_device_model_form" model="ir.ui.view">
+        <field name="name">repair.device.model.form</field>
+        <field name="model">repair.device.model</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="brand_id"/>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="view_repair_device_model_tree" model="ir.ui.view">
+        <field name="name">repair.device.model.tree</field>
+        <field name="model">repair.device.model</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="brand_id"/>
+                <field name="name"/>
+                <field name="display_name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="action_repair_device_model" model="ir.actions.act_window">
+        <field name="name">Modelos de Dispositivos</field>
+        <field name="res_model">repair.device.model</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

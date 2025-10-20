@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_repair_brand_user,repair.brand.user,model_repair_brand,group_repair_user,1,0,0,0
+access_repair_brand_technician,repair.brand.technician,model_repair_brand,group_repair_technician,1,0,0,0
+access_repair_brand_manager,repair.brand.manager,model_repair_brand,group_repair_manager,1,1,1,1
+access_repair_device_model_user,repair.device.model.user,model_repair_device_model,group_repair_user,1,0,0,0
+access_repair_device_model_technician,repair.device.model.technician,model_repair_device_model,group_repair_technician,1,0,0,0
+access_repair_device_model_manager,repair.device.model.manager,model_repair_device_model,group_repair_manager,1,1,1,1
+access_repair_order_user,repair.order.user,model_repair_order,group_repair_user,1,0,1,0
+access_repair_order_technician,repair.order.technician,model_repair_order,group_repair_technician,1,1,1,0
+access_repair_order_manager,repair.order.manager,model_repair_order,group_repair_manager,1,1,1,1
+access_repair_order_line_user,repair.order.line.user,model_repair_order_line,group_repair_user,1,0,1,0
+access_repair_order_line_technician,repair.order.line.technician,model_repair_order_line,group_repair_technician,1,1,1,1
+access_repair_order_line_manager,repair.order.line.manager,model_repair_order_line,group_repair_manager,1,1,1,1

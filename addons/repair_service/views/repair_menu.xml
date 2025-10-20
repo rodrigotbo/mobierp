@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Principal -->
+    <menuitem id="menu_repair_root" 
+              name="Assistência Técnica" 
+              web_icon="repair_service,static/description/icon.png"
+              sequence="10"/>
+    
+    <!-- Menu Operações -->
+    <menuitem id="menu_repair_operations" 
+              name="Operações" 
+              parent="menu_repair_root" 
+              sequence="10"/>
+    
+    <menuitem id="menu_repair_order" 
+              name="Ordens de Serviço" 
+              parent="menu_repair_operations" 
+              action="action_repair_order" 
+              sequence="10"/>
+    
+    <!-- Menu Configurações -->
+    <menuitem id="menu_repair_config" 
+              name="Configurações" 
+              parent="menu_repair_root" 
+              sequence="50"/>
+    
+    <menuitem id="menu_repair_brand" 
+              name="Marcas" 
+              parent="menu_repair_config" 
+              action="action_repair_brand" 
+              sequence="10"/>
+    
+    <menuitem id="menu_repair_device_model" 
+              name="Modelos" 
+              parent="menu_repair_config" 
+              action="action_repair_device_model" 
+              sequence="20"/>
+</odoo>
