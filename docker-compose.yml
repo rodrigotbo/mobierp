@@ -21,45 +21,61 @@ services:
       retries: 5
 
   odoo:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     container_name: mobierp-odoo
     depends_on:
       db:
         condition: service_healthy
     ports:
       - "8069:8069"
+      - "8072:8072"
     environment:
       - HOST=db
       - USER=odoo
       - PASSWORD=odoo123
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=odoo
+      - DB_PASSWORD=odoo123
       - ADMIN_PASSWD=admin123
+      - ODOO_RC=/etc/odoo/odoo.conf
     volumes:
-      - ./addons:/mnt/extra-addons
-      - ./config:/etc/odoo
-      - ./scripts:/opt/scripts
+      - ./addons:/mnt/extra-addons:ro
+      - ./config:/etc/odoo:ro
+      - ./scripts:/opt/scripts:ro
       - mobierp-odoo-data:/var/lib/odoo
+      - mobierp-odoo-filestore:/var/lib/odoo/filestore
     restart: unless-stopped
     networks:
       - mobierp-network
     command: >
       sh -c "
         echo 'Aguardando banco de dados...' &&
-        sleep 5 &&
-        echo 'Iniciando Odoo...' &&
-        if [ ! -f /var/lib/odoo/.initialized ]; then
-          echo 'Primeira execução detectada. Configurando MobiERP...' &&
-          odoo -d mobierp --db_host=db --db_user=odoo --db_password=odoo123 --init=base,repair_service,mobile_parts --without-demo=all --stop-after-init &&
-          touch /var/lib/odoo/.initialized &&
-          echo 'Configuração inicial concluída!' &&
+        sleep 10 &&
+        echo 'Verificando conectividade com DB...' &&
+        until PGPASSWORD=odoo123 psql -h db -U odoo -d postgres -c '\q' 2>/dev/null; do
+          echo 'Aguardando PostgreSQL...' &&
+          sleep 2;
+        done &&
+        echo 'Banco de dados pronto!' &&
+        if [ ! -f /var/lib/odoo/.db_initialized ]; then
+          echo 'Criando banco de dados mobierp...' &&
+          odoo -c /etc/odoo/odoo.conf -d mobierp --init=base --stop-after-init &&
+          touch /var/lib/odoo/.db_initialized &&
+          echo 'Banco criado com sucesso!' ;
         fi &&
         echo 'Iniciando servidor Odoo...' &&
-        odoo --db_host=db --db_user=odoo --db_password=odoo123 --database=mobierp --dev=reload
+        exec odoo -c /etc/odoo/odoo.conf
       "
 
 volumes:
   mobierp-db-data:
     driver: local
   mobierp-odoo-data:
+    driver: local
+  mobierp-odoo-filestore:
     driver: local
 
 networks:
